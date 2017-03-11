@@ -1,14 +1,15 @@
 "use strict";
 
-const moment = require('moment-timezone'),
+const moment_timezone = require('moment-timezone'),
 {MinToMilli, GetSubreddit} = require('./utils/helper'),
 {streamFinder} = require('./utils/snoowrap'),
 {LeaguesRef, CommentIDRef, DailyGamesRef, GameIDRef} = require('./utils/firebase'),
 {RetrieveGameTimes} = require('./api/gametime'),
 {RetrieveComments} = require('./api/comments'),
 {SendPrivateMessage} = require('./api/privatemessage');
+const moment = require('moment');
 
-const SUBREDDITS = ['nbastreams'];
+const SUBREDDITS = ['nbastreams', 'nhlstreams', 'mlbstreams'];
 
 async function GetGameIDs() {
   var IDList = [];
@@ -38,7 +39,7 @@ async function GetGameTimes(subreddit) {
     .then((snapshot) => {
       snapshot.forEach(postIDSnapshot => {
         var gameTime = postIDSnapshot.child('gametime').val();
-        var gameEasternMoment = moment.tz(gameTime, "MM-DD-YYYY HH:mm", 'America/New_York');
+        var gameEasternMoment = moment_timezone.tz(gameTime, "MM-DD-YYYY HH:mm", 'America/New_York');
         var gameLocalMoment = gameEasternMoment.clone().tz("America/Los_Angeles");
         var diff = moment().diff(gameLocalMoment);
         if (diff > 0) validGames.push(postIDSnapshot.key);
@@ -50,27 +51,27 @@ async function GetGameTimes(subreddit) {
 if (require.main === module) {
   // Check if there are new Game Threads, if there is; parse the post information and store the post ID.
   setInterval(() => {
-    console.log("RETREIEVING GAME TIMES");
+    console.log(`RETREIEVING GAME TIMES`);
     SUBREDDITS.forEach((subreddit, index, array) => {
       var games = GetGameIDs();
       RetrieveGameTimes(subreddit, games);
     })
-  }, MinToMilli(.1));
+  }, MinToMilli(15));
   // Call frequently maybe every 10 minutes
   setInterval(() => {
-    console.log("RETREIEVING COMMENTS");
+    console.log(`RETREIEVING COMMENTS`);
     SUBREDDITS.forEach((subreddit, index, array) => {
       var comments = GetCommentIDs();
       RetrieveComments(subreddit, comments);
     });
-  }, MinToMilli(.1));
-  //console.log("Checking every 5 minutes to see if game time has passed, if so, mail out the link to everyone");
+  }, MinToMilli(10));
+  // Checking every 5 minutes to see if game time has passed, if so, mail out the link to everyone
   setInterval(() => {
-    console.log("SENDING MESSAGES");
+    console.log(`SENDING MESSAGES`);
     // TODO RETREIVE AND SEND THE COMMENT
     SUBREDDITS.forEach(subreddit => {
       var checkGames = GetGameTimes(subreddit);
       SendPrivateMessage(subreddit, checkGames);
     });
-  }, MinToMilli(.10));
+  }, MinToMilli(.50));
 }
