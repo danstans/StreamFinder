@@ -8,16 +8,20 @@ module.exports.SendPrivateMessage = ((subreddit, postIDs) => {
     .then((snapshot) => {
       postIDs.then((postIDs) => {
         postIDs.forEach(postID => {
-          var pass = 0;
-          var teams, users = [];
+          let pass = 0;
+          let teams = [];
+          let users = [];
           snapshot.child(postID).child('teams').val().forEach(team => {
+            console.log(`${team} pushed`);
             teams.push(team);
           });
           teams.forEach(teamName => {
             LeaguesRef.child(subreddit).child(teamName).child('usernames').once("value")
               .then((usernames) => {
                 usernames.forEach(username => {
-                  if (!users.includes(username.val())) users.push(username.val());
+                  if (!users.includes(username.val())){
+                    console.log(`${username.val()} pushed for ${teamName}`)}
+                    users.push(username.val());
                 });
                 if (pass++ % 2) {
                   streamFinder.getSubmission(postID).expandReplies({
