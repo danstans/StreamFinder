@@ -1,5 +1,5 @@
 {
-  "name": "StreamFinder",
+  "name": "streamfinder",
   "version": "1.0.0",
   "description": "Reddit bot for sports streams",
   "main": "index.js",
