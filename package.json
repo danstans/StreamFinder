@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "npm install",
-    "serve": "node index.js",
+    "start": "node index.js",
     "test": "test"
   },
   "repository": {
