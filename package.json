@@ -1,5 +1,5 @@
 {
-  "name": "node_streamfinder",
+  "name": "StreamFinder",
   "version": "1.0.0",
   "description": "Reddit bot for sports streams",
   "main": "index.js",
@@ -10,7 +10,8 @@
     "snoowrap": "^1.12.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "build": "npm install",
+    "serve": "node index.js",
     "test": "test"
   },
   "repository": {
@@ -21,5 +22,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/danstans/streamfinder/issues"
-  }
+  },
+  "engines": {
+  "node": ">7.6.0"
+}
 }
