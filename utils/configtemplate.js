@@ -1,4 +1,4 @@
-// This file contains reddit app information as well as user sensitive information. Save this file as config.js after changed.
+// This file contains reddit app information as well as user sensitive information. Save this file as config.js for local use.
 "use strict"
 
 var config = {}
