@@ -9,18 +9,17 @@
     "moment-timezone": "^0.5.11",
     "snoowrap": "^1.12.0"
   },
-  "devDependencies": {},
   "scripts": {
+    "start": "node index.js",
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/stansberry_scripts/node_streamfinder.git"
+    "url": "git+https://github.com/danstans/streamfinder.git"
   },
   "author": "Daniel Stansberry",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/stansberry_scripts/node_streamfinder/issues"
-  },
-  "homepage": "https://gitlab.com/stansberry_scripts/node_streamfinder#README"
+    "url": "https://github.com/danstans/streamfinder/issues"
+  }
 }
